@@ -13,10 +13,10 @@ export default function App() {
   React.useEffect(() => {
     setLoading(true);
     DataService.getTopSellingGames()
-      .then(_gameList => {
+      .then(res => {
         setLoading(false);
-        setGameList(_gameList);
-        setFilteredGameList(_gameList);
+        setGameList(res.data);
+        setFilteredGameList(res.data);
       })
       .catch(err => {
         alert(err);
@@ -51,13 +51,14 @@ export default function App() {
     <Box className="app">
       <Header
         onSearch={onSearch}
-        sortValue={"Rank"}
-        sortItems={["Rank", "Name", "Year"]}
-        onSort={onSort}
-        gameList={gameList}
       />
       <Container>
-        <GameList list={filteredGameList} />
+        <GameList 
+          sortValue={"Rank"}
+          sortItems={["Rank", "Name", "Year"]}
+          onSort={onSort} 
+          list={filteredGameList} 
+        />
         <Loader showLoader={loading} />
       </Container>
     </Box>
